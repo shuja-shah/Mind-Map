@@ -146,9 +146,7 @@ const MainNode = () => {
     return null;
   };
 
-  useEffect(() => {
-    console.log(orgChart);
-  }, [orgChart]);
+
 
   const renderCustomNodeElement = ({ nodeDatum }) => {
     const isParentNode = nodeDatum.children && nodeDatum.children.length > 0;
