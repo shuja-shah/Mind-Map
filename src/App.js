@@ -11,8 +11,8 @@ const App = () => {
       <Routes>
         <Route exact path="/Auth" element={<Auth />} />
         <Route element={<RequireAuth />}>
-          <Route exact path="/" element={<InnerApp />} />
-          <Route exact path="/List" element={<Layout />} />
+          <Route exact path="/check" element={<InnerApp />} />
+          <Route exact path="/" element={<Layout />} />
         </Route>
       </Routes>
     </Router>
