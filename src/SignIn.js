@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { LOGIN_ENDPOINT } from "./config";
+import { useDispatch } from "react-redux";
+import { setToken } from "./redux/user";
+import { Alert } from "@mui/material";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -17,11 +21,28 @@ function SignIn() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const [err, setErr] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    console.log("The form was submitted with the following data:");
     console.log({ email, password });
+    const res = await fetch(LOGIN_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) {
+      setErr("Invalid Credentials or User does not exist");
+    } else {
+      dispatch(setToken(true));
+      setTimeout(() => {
+        navigate("/");
+      });
+    }
   };
 
   return (
@@ -56,7 +77,7 @@ function SignIn() {
             onChange={handleChange}
           />
         </div>
-
+        {err && <Alert severity="error">{err}</Alert>}
         <div className="formField">
           <button className="formFieldButton">Sign In</button>{" "}
           <Link to="/" className="formFieldLink">

@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { REGISTER_ENDPOINT } from "./config";
+import { Alert } from "@mui/material";
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [hasAgreed, setHasAgreed] = useState(false);
+  const [err, setErr] = useState("");
+  const [succ, setSucc] = useState("");
 
   const handleChange = (event) => {
     const target = event.target;
@@ -23,11 +27,30 @@ function SignUp() {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (err) {
+      setTimeout(() => {
+        setErr("");
+      }, 3000);
+    }
+  }, [err]);
 
-    console.log("The form was submitted with the following data:");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     console.log({ email, password, name, hasAgreed });
+    const res = await fetch(REGISTER_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({ email, password, name, hasAgreed }),
+    });
+    if (!res.ok) {
+      setErr("Invalid Credentials or User does not exist");
+    } else {
+      setSucc("User created successfully");
+    }
   };
 
   return (
@@ -91,7 +114,8 @@ function SignUp() {
             </a>
           </label>
         </div>
-
+        {err && <Alert severity="error">{err}</Alert>}
+        {succ && <Alert severity="success">{succ}</Alert>}
         <div className="formField">
           <button className="formFieldButton">Sign Up</button>{" "}
           <Link to="/sign-in" className="formFieldLink">

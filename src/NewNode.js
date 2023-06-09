@@ -78,7 +78,7 @@ const NewNode = () => {
                   postNodes({
                     unique_id: uuid(),
                     name: orgChart.length
-                      ? "MyMap" + " " + orgChart.length
+                      ? "MyMap" + " " + orgChart.length + 1
                       : "My Map 1",
                     tree: [...orgChart],
                   })
