@@ -1,6 +1,8 @@
 import { Box, Grid, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Layout = () => {
+  const navigate = useNavigate();
   return (
     <Grid container direction="column">
       <Grid
@@ -39,7 +41,9 @@ const Layout = () => {
         >
           Looks like you don't have any mindmaps yet.
           <p>All Your Mind Maps Would Appear Here!</p>
-          <button className="create-btn">Create New</button>
+          <button className="create-btn" onClick={() => navigate("/New")}>
+            Create New
+          </button>
         </Box>
       </Grid>
     </Grid>

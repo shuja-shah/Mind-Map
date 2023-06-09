@@ -21,7 +21,6 @@ const SideNav = () => {
 };
 
 const MainNode = () => {
-
   const [orgChart, setOrgChart] = useState([
     {
       id: uuid(),
@@ -146,8 +145,6 @@ const MainNode = () => {
     return null;
   };
 
-
-
   const renderCustomNodeElement = ({ nodeDatum }) => {
     const isParentNode = nodeDatum.children && nodeDatum.children.length > 0;
 
@@ -212,6 +209,7 @@ const MainNode = () => {
   );
 };
 
+export { MainNode };
 const InnerApp = () => {
   return (
     <Grid container alignItems={"flex-start"}>

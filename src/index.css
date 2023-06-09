@@ -33,10 +33,25 @@ body {
   margin: 1rem 0;
   cursor: pointer;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .create-btn:hover {
   background-color: #40434e;
+}
+
+.cancel-btn {
+  /* border: 1px solid #ccc; */
+  color: grey;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: #fff;
+  border: none;
+  outline: none;
 }
 
 .appForm {

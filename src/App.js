@@ -4,6 +4,7 @@ import RequireAuth from "./RequireAuth";
 import Auth from "./Auth";
 import "./index.css";
 import Layout from "./Layout";
+import NewNode from "./NewNode";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route element={<RequireAuth />}>
           <Route exact path="/" element={<InnerApp />} />
           <Route exact path="/List" element={<Layout />} />
+          <Route exact path="/New" element={<NewNode />} />
         </Route>
       </Routes>
     </Router>
