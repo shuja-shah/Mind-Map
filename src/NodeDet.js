@@ -1,26 +1,36 @@
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, CircularProgress } from "@mui/material";
 import { MainNode } from "./InnerApp";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { postNodes } from "./redux/nodes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tree from "react-d3-tree";
 import uuid from "react-uuid";
 
-const NewNode = () => {
+const NodeDet = () => {
+  const { unique_id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [orgChart, setOrgChart] = useState([
-    {
-      id: uuid(),
-      name: "",
-      children: [],
-    },
-  ]);
+  const [orgChart, setOrgChart] = useState([]);
+  const currentNode = useSelector((state) => state.nodes.nodes);
+  const [data, setData] = useState();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  return (
+  useEffect(() => {
+    const currentTarget = currentNode.find(
+      (ele) => ele.unique_id === unique_id
+    );
+    if (currentTarget) {
+      setData(currentTarget);
+      setOrgChart(currentTarget.tree);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    }
+  }, [currentNode, unique_id]);
+
+  return !loading ? (
     <Grid container direction="column">
       <Grid
         item
@@ -37,7 +47,7 @@ const NewNode = () => {
             fontFamily: "Roboto",
           }}
         >
-          New Map
+          {data.name ? data.name : "Map Details"}
         </Typography>
       </Grid>
       <Grid
@@ -67,20 +77,13 @@ const NewNode = () => {
         }}
       >
         <Box sx={{ display: "flex", width: "15%", gap: "0.5rem" }}>
-          <button className="cancel-btn">Cancel</button>
+          <button className="cancel-btn" onClick={() => navigate(-1)}>
+            Back
+          </button>
           <div style={{ width: "100px" }}>
             <button
               className="create-btn"
               onClick={() => {
-                dispatch(
-                  postNodes({
-                    unique_id: uuid(),
-                    name: orgChart.length
-                      ? "MyMap" + " " + orgChart.length
-                      : "My Map 1",
-                    tree: [...orgChart],
-                  })
-                );
                 setTimeout(() => {
                   setLoading(false);
                   navigate("/");
@@ -93,7 +96,23 @@ const NewNode = () => {
         </Box>
       </Box>
     </Grid>
+  ) : (
+    <Box
+      sx={{
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0,0,0,0.5)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CircularProgress />
+    </Box>
   );
 };
 
-export default NewNode;
+export default NodeDet;

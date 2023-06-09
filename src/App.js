@@ -5,6 +5,7 @@ import Auth from "./Auth";
 import "./index.css";
 import Layout from "./Layout";
 import NewNode from "./NewNode";
+import NodeDet from "./NodeDet";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route exact path="/check" element={<InnerApp />} />
           <Route exact path="/" element={<Layout />} />
           <Route exact path="/New" element={<NewNode />} />
+          <Route exact path="/List/:unique_id" element={<NodeDet />} />
         </Route>
       </Routes>
     </Router>
