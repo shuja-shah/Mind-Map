@@ -69,7 +69,12 @@ const NewNode = () => {
             <button
               className="create-btn"
               onClick={() => {
-                dispatch(postNodes(orgChart));
+                dispatch(
+                  postNodes({
+                    ...orgChart,
+                    name: "MyMap" + " " + orgChart.length ? orgChart.length : 1,
+                  })
+                );
                 setTimeout(() => {
                   setLoading(false);
                   navigate("/");
