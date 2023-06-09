@@ -1,7 +1,22 @@
 import { Grid, Typography, Box } from "@mui/material";
 import { MainNode } from "./InnerApp";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { postNodes } from "./redux/nodes";
 
 const NewNode = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [orgChart, setOrgChart] = useState([
+    {
+      id: uuid(),
+      name: "",
+      children: [],
+    },
+  ]);
+
+  const [loading, setLoading] = useState(false);
+
   return (
     <Grid container direction="column">
       <Grid
@@ -35,7 +50,7 @@ const NewNode = () => {
             width: "100%",
           }}
         >
-          <MainNode />
+          <MainNode orgChart={orgChart} setOrgChart={setOrgChart} />
         </Box>
       </Grid>
       <Box
@@ -51,7 +66,18 @@ const NewNode = () => {
         <Box sx={{ display: "flex", width: "15%", gap: "0.5rem" }}>
           <button className="cancel-btn">Cancel</button>
           <div style={{ width: "100px" }}>
-            <button className="create-btn">Save</button>
+            <button
+              className="create-btn"
+              onClick={() => {
+                dispatch(postNodes(orgChart));
+                setTimeout(() => {
+                  setLoading(false);
+                  navigate("/");
+                }, 1000);
+              }}
+            >
+              Save
+            </button>
           </div>
         </Box>
       </Box>

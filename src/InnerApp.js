@@ -20,14 +20,8 @@ const SideNav = () => {
   );
 };
 
-const MainNode = () => {
-  const [orgChart, setOrgChart] = useState([
-    {
-      id: uuid(),
-      name: "",
-      children: [],
-    },
-  ]);
+const MainNode = ({orgChart, setOrgChart}) => {
+
 
   const addChild = (node, parentId) => {
     return {
