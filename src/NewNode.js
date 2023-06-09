@@ -67,7 +67,9 @@ const NewNode = () => {
         }}
       >
         <Box sx={{ display: "flex", width: "15%", gap: "0.5rem" }}>
-          <button className="cancel-btn">Cancel</button>
+          <button className="cancel-btn" onClick={() => navigate(-1)}>
+            Cancel
+          </button>
           <div style={{ width: "100px" }}>
             <button
               className="create-btn"

@@ -34,6 +34,15 @@ const Layout = () => {
         >
           Your MindMaps
         </Typography>
+        <div
+          style={{
+            width: "134px",
+          }}
+        >
+          <button className="create-btn" onClick={() => navigate("/New")}>
+            +
+          </button>
+        </div>
       </Grid>
       <Grid
         item
